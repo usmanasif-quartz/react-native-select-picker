@@ -25,6 +25,7 @@ export default class SelectPicker extends PureComponent {
 			disabled: this.props.disabled || false,
 			placeholder: this.props.placeholder || "",
 			children: null,
+			applyChangeOnValueSelected: this.props.applyChangeOnValueSelected || false,
 
 			// ScrollView Position.
 			scrollY: 0
@@ -86,6 +87,12 @@ export default class SelectPicker extends PureComponent {
 				let selected = (child.props.value == this.state.selected);
 				/* let key = (child.props.key != null) ? child.props.key : index; */
 				// if (selected) this.setScrollViewPosition();
+				if (child.props.value == this.state.selected) {
+					this.stateSet({
+						selectedLabel: child.props.label
+					});
+				}
+
 				let newChild = React.cloneElement(child, {
 					selected: selected,
 					/* key: index, */
@@ -96,6 +103,9 @@ export default class SelectPicker extends PureComponent {
 							selectedLabel: label
 						}, () => {
 							this.renderChildren();
+							if (this.state.applyChangeOnValueSelected) {
+								this.onValueChange();
+							}
 						});
 					},
 					returnPosition: (y) => {
@@ -196,11 +206,13 @@ export default class SelectPicker extends PureComponent {
 						{/* Header */}
 						<View style={styles.pickerHeader}>
 							<View style={{flex:1}}>
-							
+								{
+									Platform.OS !== 'android' &&
+									<TouchableOpacity onPress={() => this.onValueChange()} activeOpacity={0.9} style={[{padding:5}, styles.px10]}>
+										<Text style={[styles.defaultButtonTextStyle, this.props.doneButtonTextStyle]}>{this.props.doneButtonText || 'Done'}</Text>
+									</TouchableOpacity>
+								}
 							</View>
-							<TouchableOpacity onPress={() => this.onValueChange()} activeOpacity={0.9} style={[{padding:5}, styles.px10]}>
-								<Text style={[styles.defaultButtonTextStyle, this.props.doneButtonTextStyle]}>{this.props.doneButtonText || 'Done'}</Text>
-							</TouchableOpacity>
 						</View>
 						
 						{/* Body */}

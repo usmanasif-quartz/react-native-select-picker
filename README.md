@@ -82,6 +82,7 @@ The following properties can go in the \<SelectPicker> component (equivalent of 
 | containerStyle | StyleSheet | `{backgroundColor:'#FFFFFF'}` | No | This is the style for the modal dropdown select page. |
 | doneButtonText | string | `"done"` | No | You can change the text being displayed for the confirmation button at the top right corner |
 | doneButtonTextStyle | StyleSheet | `{textAlign:'center',color: '#1976D2',fontWeight: '600',fontSize:16}` | No | You can change the style of the confirm text to suit your design structure or template |
+| applyChangeOnValueSelected | boolean | false | No | If set to `true` it will hide the done button, when user selects an option it will be applied immediately and modal will be closed. This option works only in Android |
 
 ### \<SelectPicker.Item> component props
 The following properties go into the \<SelectPicker.Item> component (equivalent of \<option> in HTML):
